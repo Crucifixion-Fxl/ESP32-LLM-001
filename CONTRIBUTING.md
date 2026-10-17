@@ -9,18 +9,21 @@ changes separate and explain compatibility with existing release artifacts.
 From the repository root:
 
 ```bash
-uv sync --locked --extra analysis
-uv run python -m unittest discover -s tests -v
-uv run python scripts/check_repository.py
-uv run python scripts/render_diagrams.py --check
+make setup
+make check
+make test
 ```
 
 For firmware changes, activate ESP-IDF v6.1-beta1 and build the affected project:
 
 ```bash
-idf.py -C firmware/master build
-idf.py -C firmware/node build
+make build-master
+make build-node
 ```
+
+Run `make help` for all shortcuts. Override `MASTER_BUILD` or `NODE_BUILD` to
+build outside the default firmware build directories. For optional analysis
+dependencies, use `uv sync --locked --extra analysis`.
 
 Use `scripts/flash_data.py --dry-run` to review data-flash commands without a
 serial device. A real flash requires an explicit port and the correct layer file.
@@ -49,3 +52,15 @@ for hardware issues; redact local identifiers and credentials.
 
 Edit `scripts/render_diagrams.py`, regenerate SVGs, and visually review the
 result. `--check` confirms that checked-in diagrams match their source.
+
+## Documentation and releases
+
+Keep English and Chinese READMEs aligned. Record current behavior in
+[the project specification](docs/product-spec.md) and meaningful design decisions
+under `docs/adr/`; label retrospective records as existing design.
+
+Keep release-note source under `docs/releases/`. Write GitHub release titles
+and notes in English. Describe the included files,
+setup steps, compatibility, verified scope and known limitations. Separate
+historical experiment results from new validation. Editing release notes must
+not imply that firmware attachments were rebuilt or retested.

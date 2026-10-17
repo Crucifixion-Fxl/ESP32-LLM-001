@@ -38,6 +38,22 @@ def finish(parts):
     return '\n'.join(parts + ['</g></svg>']) + '\n'
 
 
+def project_mark():
+    points = [(64, 22), (100, 43), (100, 85), (64, 106), (28, 85), (28, 43)]
+    parts = ['<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128" role="img" aria-labelledby="title desc">',
+             '<title id="title">ESP32-LLM-001</title>',
+             '<desc id="desc">One master chip surrounded by six connected compute nodes. A symbolic project mark, not a wiring diagram.</desc>',
+             '<rect width="128" height="128" rx="28" fill="#142d3b"/>',
+             '<path d="M64 22 L100 43 V85 L64 106 L28 85 V43 Z" fill="none" stroke="#49b8bd" stroke-width="3"/>']
+    for x, y in points:
+        parts.append(f'<rect x="{x-7}" y="{y-7}" width="14" height="14" rx="4" fill="#b5eeeb"/>')
+    parts += ['<rect x="47" y="47" width="34" height="34" rx="8" fill="#ffffff"/>',
+              '<rect x="56" y="56" width="16" height="16" rx="3" fill="#087f8c"/>']
+    for offset in [55, 64, 73]:
+        parts.append(f'<path d="M{offset} 42 V47 M{offset} 81 V86 M42 {offset} H47 M81 {offset} H86" stroke="#ffffff" stroke-width="3" stroke-linecap="round"/>')
+    return '\n'.join(parts + ['</svg>']) + '\n'
+
+
 def architecture():
     p=start('Seven boards. One inference pipeline.', 'ESP32-LLM-001  /  Runtime topology  /  GPIO connections shown separately', 570)
     p += [box(40, 125, 210, 155, 'MASTER', ['BPE + INT4 embeddings', 'Final RMS norm + LM head', 'Sampling + USB console'], True)]
@@ -89,7 +105,7 @@ def main():
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--check',action='store_true')
     args=parser.parse_args()
-    for name,source in [('architecture',architecture),('model-workflow',workflow),('wiring',wiring)]:
+    for name,source in [('project-mark',project_mark),('architecture',architecture),('model-workflow',workflow),('wiring',wiring)]:
         destination=ROOT/'docs/images'/f'{name}.svg'
         content=source()
         if args.check:
