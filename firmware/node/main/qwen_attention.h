@@ -1,5 +1,5 @@
 #pragma once
-#include "model_struct.h"
+#include "model_types.h"
 
 #include <math.h>
 #include <string.h>

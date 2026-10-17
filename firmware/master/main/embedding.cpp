@@ -1,5 +1,5 @@
 #include "embedding.h"
-#include "struct.h"
+#include "tokenizer_types.h"
 #include <string.h>
 #include "esp_log.h"
 #include "esp_partition.h"

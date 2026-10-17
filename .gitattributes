@@ -1,6 +1,7 @@
-# Python tooling — don't include in GitHub language statistics
-python_tools/*.py linguist-vendored
-
-# Keep generated/build files out
-*.json linguist-generated
-build/* linguist-generated
+* text=auto
+*.py text eol=lf
+*.sh text eol=lf
+*.bat text eol=crlf
+*.md text eol=lf
+*.svg text eol=lf
+uv.lock linguist-generated=true

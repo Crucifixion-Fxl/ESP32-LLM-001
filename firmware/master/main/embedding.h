@@ -5,8 +5,8 @@
 #include <string.h>
 #include "esp_err.h"
 #include "spi_flash_mmap.h"
-#include "model_struct.h"
-#include "struct.h"
+#include "model_types.h"
+#include "tokenizer_types.h"
 
 inline float fp16_to_fp32(uint16_t h) {
     uint32_t sign = (h >> 15) & 1;

@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="630" viewBox="0 0 1080 630" role="img" aria-labelledby="title desc">
+<title id="title">Wire each hop, then close the return path.</title><desc id="desc">ESP32-S3 N16R8  /  GPIO numbers, not physical header positions  /  Power off while wiring</desc>
+<defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 Z" fill="#087f8c"/></marker></defs>
+<rect width="1080" height="630" rx="18" fill="#f8fbfc"/>
+<g font-family="Arial, Helvetica, sans-serif">
+<text x="40" y="46" font-size="25" fill="#142d3b" font-weight="700" text-anchor="start">Wire each hop, then close the return path.</text>
+<text x="40" y="74" font-size="14" fill="#576b78" font-weight="400" text-anchor="start">ESP32-S3 N16R8  /  GPIO numbers, not physical header positions  /  Power off while wiring</text>
+<rect x="55" y="120" width="285" height="190" rx="12" fill="#e9f5f5" stroke="#087f8c" stroke-width="1.5"/><text x="73" y="149" font-size="16" fill="#142d3b" font-weight="700" text-anchor="start">UPSTREAM BOARD</text><text x="73" y="176" font-size="13" fill="#576b78" font-weight="400" text-anchor="start">SPI transmitter</text><text x="73" y="197" font-size="13" fill="#576b78" font-weight="400" text-anchor="start">GPIO 4   ·  CS</text><text x="73" y="218" font-size="13" fill="#576b78" font-weight="400" text-anchor="start">GPIO 5   ·  MOSI</text><text x="73" y="239" font-size="13" fill="#576b78" font-weight="400" text-anchor="start">GPIO 7   ·  SCLK</text>
+<rect x="740" y="120" width="285" height="190" rx="12" fill="#e9f5f5" stroke="#087f8c" stroke-width="1.5"/><text x="758" y="149" font-size="16" fill="#142d3b" font-weight="700" text-anchor="start">DOWNSTREAM BOARD</text><text x="758" y="176" font-size="13" fill="#576b78" font-weight="400" text-anchor="start">SPI receiver</text><text x="758" y="197" font-size="13" fill="#576b78" font-weight="400" text-anchor="start">GPIO 15  ·  CS</text><text x="758" y="218" font-size="13" fill="#576b78" font-weight="400" text-anchor="start">GPIO 16  ·  MOSI</text><text x="758" y="239" font-size="13" fill="#576b78" font-weight="400" text-anchor="start">GPIO 18  ·  SCLK</text>
+<path d="M340 197 H740" fill="none" stroke="#087f8c" stroke-width="2" marker-end="url(#arrow)"/><text x="515" y="191" font-size="12" fill="#087f8c" font-weight="400" text-anchor="start">CS</text>
+<path d="M340 218 H740" fill="none" stroke="#087f8c" stroke-width="2" marker-end="url(#arrow)"/><text x="515" y="212" font-size="12" fill="#087f8c" font-weight="400" text-anchor="start">MOSI</text>
+<path d="M340 239 H740" fill="none" stroke="#087f8c" stroke-width="2" marker-end="url(#arrow)"/><text x="515" y="233" font-size="12" fill="#087f8c" font-weight="400" text-anchor="start">SCLK</text>
+<text x="55" y="342" font-size="16" fill="#142d3b" font-weight="700" text-anchor="start">Repeat for Master → N1 → N2 → N3 → N4 → N5 → N6 → Master.</text>
+<rect x="55" y="368" width="970" height="62" rx="12" fill="#ffffff" stroke="#d6e2e7" stroke-width="1.5"/><text x="73" y="397" font-size="16" fill="#142d3b" font-weight="700" text-anchor="start">RESET CASCADE</text>
+<text x="280" y="405" font-size="14" fill="#576b78" font-weight="400" text-anchor="start">GPIO 1 → next EN: Master through N5. Leave N6 GPIO 1 unconnected.</text>
+<rect x="55" y="444" width="970" height="62" rx="12" fill="#ffffff" stroke="#d6e2e7" stroke-width="1.5"/><text x="73" y="473" font-size="16" fill="#142d3b" font-weight="700" text-anchor="start">READY RETURN</text>
+<text x="280" y="481" font-size="14" fill="#576b78" font-weight="400" text-anchor="start">Node 6 GPIO 3 → Master GPIO 3.</text>
+<text x="55" y="548" font-size="14" fill="#142d3b" font-weight="700" text-anchor="start">COMMON GROUND</text>
+<text x="280" y="548" font-size="14" fill="#576b78" font-weight="400" text-anchor="start">Connect every board GND and the external supply negative terminal.</text>
+<text x="55" y="592" font-size="13" fill="#576b78" font-weight="400" text-anchor="start">Disconnect reset links for flashing. Do not feed external 5 V and USB power into the same board.</text>
+</g></svg>

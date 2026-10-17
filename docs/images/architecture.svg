@@ -1,93 +1,25 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="920" height="500" viewBox="0 0 920 500" font-family="Helvetica, Arial, sans-serif">
-  <!-- card background: renders as a light card on both GitHub themes -->
-  <rect x="0" y="0" width="920" height="500" rx="14" fill="#ffffff"/>
-  <rect x="0" y="0" width="920" height="500" rx="14" fill="none" stroke="#e2e8f0"/>
-
-  <text x="460" y="40" text-anchor="middle" font-size="19" font-weight="bold" fill="#0f172a">ESP32-LLM-001 — 7 × ESP32-S3 Pipeline Cluster</text>
-  <text x="460" y="62" text-anchor="middle" font-size="12" fill="#64748b">Qwen2-0.5B · 32K vocab · 1.58-bit ternary weights + INT4 embeddings · ~7 s / token · &lt; 2 W</text>
-
-  <!-- ===== Row 1: Master -> N1 -> N2 -> N3 ===== -->
-  <!-- Master -->
-  <rect x="36" y="96" width="180" height="128" rx="10" fill="#eff6ff" stroke="#2563eb" stroke-width="1.6"/>
-  <text x="126" y="120" text-anchor="middle" font-size="14" font-weight="bold" fill="#1d4ed8">MASTER</text>
-  <text x="126" y="140" text-anchor="middle" font-size="10.5" fill="#334155">BPE tokenizer</text>
-  <text x="126" y="156" text-anchor="middle" font-size="10.5" fill="#334155">INT4 embedding lookup</text>
-  <text x="126" y="172" text-anchor="middle" font-size="10.5" fill="#334155">final norm + LM head</text>
-  <text x="126" y="188" text-anchor="middle" font-size="10.5" fill="#334155">temperature sampling</text>
-  <text x="126" y="209" text-anchor="middle" font-size="9.5" fill="#64748b">USB console · 5V</text>
-
-  <!-- Node template boxes row 1 -->
-  <g>
-    <rect x="286" y="96" width="150" height="128" rx="10" fill="#f8fafc" stroke="#334155" stroke-width="1.4"/>
-    <text x="361" y="122" text-anchor="middle" font-size="13.5" font-weight="bold" fill="#0f172a">NODE 1</text>
-    <text x="361" y="142" text-anchor="middle" font-size="11" fill="#334155">layers 0–3</text>
-    <text x="361" y="162" text-anchor="middle" font-size="9.5" fill="#64748b">1.58-bit matmul</text>
-    <text x="361" y="176" text-anchor="middle" font-size="9.5" fill="#64748b">RoPE + GQA + KV</text>
-    <text x="361" y="190" text-anchor="middle" font-size="9.5" fill="#64748b">SwiGLU MLP</text>
-    <text x="361" y="211" text-anchor="middle" font-size="9.5" fill="#64748b">1.04 s / 4 layers</text>
-  </g>
-  <g>
-    <rect x="466" y="96" width="150" height="128" rx="10" fill="#f8fafc" stroke="#334155" stroke-width="1.4"/>
-    <text x="541" y="122" text-anchor="middle" font-size="13.5" font-weight="bold" fill="#0f172a">NODE 2</text>
-    <text x="541" y="142" text-anchor="middle" font-size="11" fill="#334155">layers 4–7</text>
-    <text x="541" y="211" text-anchor="middle" font-size="9.5" fill="#64748b">55.6 M MAC / token</text>
-  </g>
-  <g>
-    <rect x="646" y="96" width="150" height="128" rx="10" fill="#f8fafc" stroke="#334155" stroke-width="1.4"/>
-    <text x="721" y="122" text-anchor="middle" font-size="13.5" font-weight="bold" fill="#0f172a">NODE 3</text>
-    <text x="721" y="142" text-anchor="middle" font-size="11" fill="#334155">layers 8–11</text>
-    <text x="721" y="211" text-anchor="middle" font-size="9.5" fill="#64748b">16 MB flash / board</text>
-  </g>
-
-  <!-- arrows row 1 -->
-  <g stroke="#059669" stroke-width="2" fill="#059669">
-    <line x1="216" y1="160" x2="280" y2="160"/><path d="M 280 160 l -8 -4 v 8 z" stroke="none"/>
-    <line x1="436" y1="160" x2="460" y2="160"/><path d="M 462 160 l -8 -4 v 8 z" stroke="none"/>
-    <line x1="616" y1="160" x2="640" y2="160"/><path d="M 642 160 l -8 -4 v 8 z" stroke="none"/>
-  </g>
-  <text x="248" y="150" text-anchor="middle" font-size="8.5" fill="#059669">SPI</text>
-
-  <!-- turn down at right -->
-  <path d="M 796 160 H 838 Q 848 160 848 170 V 300 Q 848 310 838 310 H 804" fill="none" stroke="#059669" stroke-width="2"/>
-  <path d="M 802 310 l 8 -4 v 8 z" fill="#059669"/>
-
-  <!-- ===== Row 2 (right to left): N4 N5 N6 ===== -->
-  <g>
-    <rect x="646" y="246" width="150" height="128" rx="10" fill="#f8fafc" stroke="#334155" stroke-width="1.4"/>
-    <text x="721" y="272" text-anchor="middle" font-size="13.5" font-weight="bold" fill="#0f172a">NODE 4</text>
-    <text x="721" y="292" text-anchor="middle" font-size="11" fill="#334155">layers 12–15</text>
-    <text x="721" y="361" text-anchor="middle" font-size="9.5" fill="#64748b">8 MB PSRAM / board</text>
-  </g>
-  <g>
-    <rect x="466" y="246" width="150" height="128" rx="10" fill="#f8fafc" stroke="#334155" stroke-width="1.4"/>
-    <text x="541" y="272" text-anchor="middle" font-size="13.5" font-weight="bold" fill="#0f172a">NODE 5</text>
-    <text x="541" y="292" text-anchor="middle" font-size="11" fill="#334155">layers 16–19</text>
-    <text x="541" y="361" text-anchor="middle" font-size="9.5" fill="#64748b">dual-core EE SIMD</text>
-  </g>
-  <g>
-    <rect x="286" y="246" width="150" height="128" rx="10" fill="#f8fafc" stroke="#334155" stroke-width="1.4"/>
-    <text x="361" y="272" text-anchor="middle" font-size="13.5" font-weight="bold" fill="#0f172a">NODE 6</text>
-    <text x="361" y="292" text-anchor="middle" font-size="11" fill="#334155">layers 20–23</text>
-    <text x="361" y="361" text-anchor="middle" font-size="9.5" fill="#64748b">ready line → master</text>
-  </g>
-
-  <!-- arrows row 2 (right to left) -->
-  <g stroke="#059669" stroke-width="2" fill="#059669">
-    <line x1="646" y1="310" x2="622" y2="310"/><path d="M 620 310 l 8 -4 v 8 z" stroke="none"/>
-    <line x1="466" y1="310" x2="442" y2="310"/><path d="M 440 310 l 8 -4 v 8 z" stroke="none"/>
-  </g>
-
-  <!-- return path N6 -> Master -->
-  <path d="M 286 310 H 126 Q 116 310 116 300 V 230" fill="none" stroke="#059669" stroke-width="2" stroke-dasharray="6 4"/>
-  <path d="M 116 228 l -4 8 h 8 z" fill="#059669"/>
-  <text x="180" y="300" text-anchor="middle" font-size="8.5" fill="#059669">hidden state return</text>
-
-  <!-- control bus annotations -->
-  <g font-size="9.5" fill="#94a3b8">
-    <text x="36" y="412">· every hop = 3 SPI wires (CS 4→15 · MOSI 5→16 · CLK 7→18) + common ground</text>
-    <text x="36" y="430">· reset cascade: each board GPIO1 → next board EN · chain assembles in 3.9 s</text>
-    <text x="36" y="448">· model split: 24 transformer layers / 4 per node · physical chain order must match layer ranges</text>
-  </g>
-
-  <text x="460" y="482" text-anchor="middle" font-size="10" fill="#94a3b8">trained with deployment-faithful int8 activation quantization · val loss 4.58 / PPL 97.8 (wikitext-103)</text>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="570" viewBox="0 0 1080 570" role="img" aria-labelledby="title desc">
+<title id="title">Seven boards. One inference pipeline.</title><desc id="desc">ESP32-LLM-001  /  Runtime topology  /  GPIO connections shown separately</desc>
+<defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 Z" fill="#087f8c"/></marker></defs>
+<rect width="1080" height="570" rx="18" fill="#f8fbfc"/>
+<g font-family="Arial, Helvetica, sans-serif">
+<text x="40" y="46" font-size="25" fill="#142d3b" font-weight="700" text-anchor="start">Seven boards. One inference pipeline.</text>
+<text x="40" y="74" font-size="14" fill="#576b78" font-weight="400" text-anchor="start">ESP32-LLM-001  /  Runtime topology  /  GPIO connections shown separately</text>
+<rect x="40" y="125" width="210" height="155" rx="12" fill="#e9f5f5" stroke="#087f8c" stroke-width="1.5"/><text x="58" y="154" font-size="16" fill="#142d3b" font-weight="700" text-anchor="start">MASTER</text><text x="58" y="181" font-size="13" fill="#576b78" font-weight="400" text-anchor="start">BPE + INT4 embeddings</text><text x="58" y="202" font-size="13" fill="#576b78" font-weight="400" text-anchor="start">Final RMS norm + LM head</text><text x="58" y="223" font-size="13" fill="#576b78" font-weight="400" text-anchor="start">Sampling + USB console</text>
+<rect x="300" y="125" width="210" height="120" rx="12" fill="#ffffff" stroke="#d6e2e7" stroke-width="1.5"/><text x="318" y="154" font-size="16" fill="#142d3b" font-weight="700" text-anchor="start">NODE 1</text><text x="318" y="181" font-size="13" fill="#576b78" font-weight="400" text-anchor="start">Transformer layers 0–3</text><text x="318" y="202" font-size="13" fill="#576b78" font-weight="400" text-anchor="start">Ternary weights + KV cache</text>
+<rect x="550" y="125" width="210" height="120" rx="12" fill="#ffffff" stroke="#d6e2e7" stroke-width="1.5"/><text x="568" y="154" font-size="16" fill="#142d3b" font-weight="700" text-anchor="start">NODE 2</text><text x="568" y="181" font-size="13" fill="#576b78" font-weight="400" text-anchor="start">Transformer layers 4–7</text><text x="568" y="202" font-size="13" fill="#576b78" font-weight="400" text-anchor="start">Ternary weights + KV cache</text>
+<rect x="800" y="125" width="210" height="120" rx="12" fill="#ffffff" stroke="#d6e2e7" stroke-width="1.5"/><text x="818" y="154" font-size="16" fill="#142d3b" font-weight="700" text-anchor="start">NODE 3</text><text x="818" y="181" font-size="13" fill="#576b78" font-weight="400" text-anchor="start">Transformer layers 8–11</text><text x="818" y="202" font-size="13" fill="#576b78" font-weight="400" text-anchor="start">Ternary weights + KV cache</text>
+<rect x="800" y="345" width="210" height="120" rx="12" fill="#ffffff" stroke="#d6e2e7" stroke-width="1.5"/><text x="818" y="374" font-size="16" fill="#142d3b" font-weight="700" text-anchor="start">NODE 4</text><text x="818" y="401" font-size="13" fill="#576b78" font-weight="400" text-anchor="start">Transformer layers 12–15</text><text x="818" y="422" font-size="13" fill="#576b78" font-weight="400" text-anchor="start">Ternary weights + KV cache</text>
+<rect x="550" y="345" width="210" height="120" rx="12" fill="#ffffff" stroke="#d6e2e7" stroke-width="1.5"/><text x="568" y="374" font-size="16" fill="#142d3b" font-weight="700" text-anchor="start">NODE 5</text><text x="568" y="401" font-size="13" fill="#576b78" font-weight="400" text-anchor="start">Transformer layers 16–19</text><text x="568" y="422" font-size="13" fill="#576b78" font-weight="400" text-anchor="start">Ternary weights + KV cache</text>
+<rect x="300" y="345" width="210" height="120" rx="12" fill="#ffffff" stroke="#d6e2e7" stroke-width="1.5"/><text x="318" y="374" font-size="16" fill="#142d3b" font-weight="700" text-anchor="start">NODE 6</text><text x="318" y="401" font-size="13" fill="#576b78" font-weight="400" text-anchor="start">Transformer layers 20–23</text><text x="318" y="422" font-size="13" fill="#576b78" font-weight="400" text-anchor="start">Ternary weights + KV cache</text>
+<path d="M250 185 H300" fill="none" stroke="#087f8c" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M510 185 H550" fill="none" stroke="#087f8c" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M760 185 H800" fill="none" stroke="#087f8c" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M905 245 V345" fill="none" stroke="#087f8c" stroke-width="2" marker-end="url(#arrow)"/><text x="920" y="300" font-size="12" fill="#087f8c" font-weight="400" text-anchor="start">SPI</text>
+<path d="M800 405 H760" fill="none" stroke="#087f8c" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M550 405 H510" fill="none" stroke="#087f8c" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M300 405 H145 V280" fill="none" stroke="#087f8c" stroke-width="2" marker-end="url(#arrow)"/><text x="40" y="438" font-size="12" fill="#087f8c" font-weight="400" text-anchor="start">Return hidden state</text>
+<text x="310" y="294" font-size="14" fill="#087f8c" font-weight="400" text-anchor="start">Float32 hidden states  •  10 MHz SPI, mode 0  •  4 KB frames</text>
+<text x="40" y="511" font-size="14" fill="#142d3b" font-weight="400" text-anchor="start">Per board: 16 MB flash + 8 MB PSRAM. Six nodes execute 24 layers in sequence.</text>
+<text x="40" y="537" font-size="13" fill="#576b78" font-weight="400" text-anchor="start">Model weights stay local. The master begins the next token after the result returns.</text>
+</g></svg>

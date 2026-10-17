@@ -1,1 +1,0 @@
-uv run python -m esptool --chip esp32s3 --port COM6 --baud 2000000 write_flash 0x90000 ../cropped_Qwen/bins/layers_0_to_3.bin

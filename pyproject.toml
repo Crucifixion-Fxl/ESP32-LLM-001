@@ -1,20 +1,27 @@
 [project]
-name = "llm"
-version = "0.1.0"
-description = "Add your description here"
+name = "esp32-llm-tools"
+version = "1.0.0"
+description = "Model preparation, quantization, export, and validation tools for an ESP32-S3 LLM cluster"
 readme = "README.md"
 requires-python = ">=3.14"
+license = "MIT"
 dependencies = [
     "accelerate>=1.15.0",
+    "datasets",
     "esptool>=5.6.0",
+    "numpy",
     "safetensors>=0.8.0",
     "torch>=2.14.1",
+    "tqdm",
     "transformers>=5.20.1",
 ]
 
-[project.scripts]
-llm = "llm:main"
+[project.optional-dependencies]
+analysis = ["matplotlib"]
 
-[build-system]
-requires = ["uv_build>=0.12.7,<0.13.0"]
-build-backend = "uv_build"
+[project.urls]
+Repository = "https://github.com/Crucifixion-Fxl/ESP32-LLM-001"
+Issues = "https://github.com/Crucifixion-Fxl/ESP32-LLM-001/issues"
+
+[tool.uv]
+package = false
