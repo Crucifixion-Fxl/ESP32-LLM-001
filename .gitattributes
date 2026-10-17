@@ -1,0 +1,6 @@
+# Python tooling — don't include in GitHub language statistics
+python_tools/*.py linguist-vendored
+
+# Keep generated/build files out
+*.json linguist-generated
+build/* linguist-generated

@@ -1,0 +1,1 @@
+uv run python -m esptool --chip esp32s3 --port COM3 --baud 2000000 write_flash 0xFF0000 ../cropped_Qwen/bins/final_norm.bin
