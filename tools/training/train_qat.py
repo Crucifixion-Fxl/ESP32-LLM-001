@@ -141,8 +141,19 @@ def export_158bit_safetensors(model, export_path):
 # ============================================================
 # 3. 数据：wikitext-103 → 512-token 定长块
 # ============================================================
-def build_dataloaders(tokenizer, block_size=512, batch_size=1):
-    from datasets import load_dataset
+def build_dataloaders(tokenizer, block_size=512, batch_size=1, data_dir=None):
+    from datasets import load_dataset, load_from_disk
+
+    if data_dir:
+        print(f"loading local dataset: {data_dir}")
+        grouped_raw = load_from_disk(data_dir)
+        loaders = {}
+        for split, shuffle in (("train", True), ("validation", False)):
+            grouped = grouped_raw[split]
+            grouped.set_format(type="torch", columns=["input_ids", "attention_mask", "labels"])
+            loaders[split] = DataLoader(grouped, batch_size=batch_size, shuffle=shuffle,
+                                        pin_memory=True, num_workers=0, drop_last=True)
+        return loaders["train"], loaders["validation"]
 
     print("📚 加载 wikitext-103-raw-v1 ...")
     ds = load_dataset("Salesforce/wikitext", "wikitext-103-raw-v1")
@@ -189,6 +200,10 @@ def main():
     parser.add_argument("--patience", type=int, default=10, help="连续 N 轮验证无提升则早停")
     parser.add_argument("--ckpt", default=str(MODEL_DIR.parent / "checkpoints" / "qat"))
     parser.add_argument("--resume", action="store_true")
+    parser.add_argument("--from-best", action="store_true",
+                        help="load weights only from ckpt/best.pt with a fresh optimizer/scheduler")
+    parser.add_argument("--data", default=None,
+                        help="local pre-grouped dataset dir (load_from_disk); default: wikitext-103")
     parser.add_argument("--amp", choices=["auto", "bf16", "fp16", "fp32"], default="auto")
     args = parser.parse_args()
 
@@ -218,7 +233,7 @@ def main():
     print(f"✅ 已替换 {n} 个线性层为 BitNetLinear（含激活 int8 假量化）")
     model.to(device).train()
 
-    train_loader, val_loader = build_dataloaders(tokenizer, args.block_size, args.batch_size)
+    train_loader, val_loader = build_dataloaders(tokenizer, args.block_size, args.batch_size, args.data)
 
     optimizer = torch.optim.AdamW(model.parameters(), lr=args.lr, weight_decay=0.01)
     scheduler = get_cosine_schedule_with_warmup(optimizer, args.warmup, args.steps)
@@ -228,6 +243,11 @@ def main():
     os.makedirs(args.ckpt, exist_ok=True)
     ckpt_path = os.path.join(args.ckpt, "latest.pt")
     start_step, best_val, stall = 0, math.inf, 0
+    if args.from_best:
+        best_path = os.path.join(args.ckpt, "best.pt")
+        if os.path.exists(best_path):
+            model.load_state_dict(torch.load(best_path, map_location=device))
+            print(f"cold start from best weights: {best_path}")
     if args.resume and os.path.exists(ckpt_path):
         state = torch.load(ckpt_path, map_location=device)
         model.load_state_dict(state["model"])
